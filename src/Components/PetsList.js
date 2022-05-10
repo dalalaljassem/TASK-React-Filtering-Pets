@@ -1,13 +1,13 @@
-import pets from "../petsData";
+import petsData from "../petsData";
 import PetItem from "./PetItem";
 import {useState} from "react";
-
 
 
 function PetsList() {
 //add the states
 const [query, setQuery] = useState("");
 const [type, setType] = useState("");
+const [data, setPets] = useState(petsData);
 
 //handle change events for onChange 
 function handleChange(event){
@@ -18,10 +18,16 @@ function handleType(event){
   setType(event.target.value.toLowerCase())
 }
 
+function handleAdopt(id){
+  setPets(data.filter(item => item.id !== id));
+};
+
 //iterate through pet list then filter and map result to pet
-  const petList = pets
+  const petFilter = data
   .filter((pet) => pet.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()) && pet.type.includes(type.toLocaleLowerCase()) )
-  .map((pet) => <PetItem pet={pet} key={pet.id} name={pet.name.toLocaleLowerCase()} type={pet.type.toLocaleLowerCase()} />);
+
+  const petMap = petFilter.map((data) => <PetItem data={data} key={data.id} handle={handleAdopt} />);
+
 
   return (
     <section id="doctors" className="doctor-section pt-140">
@@ -58,7 +64,7 @@ function handleType(event){
           </div>
         </div>
 
-        <div className="row justify-content-center">{petList}</div>
+        <div className="row justify-content-center">{petMap}</div>
       </div>
     </section>
   );
