@@ -26,7 +26,7 @@ function handleAdopt(id){
   const petFilter = data
   .filter((pet) => pet.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()) && pet.type.includes(type.toLocaleLowerCase()) )
 
-  const petMap = petFilter.map((data) => <PetItem data={data} key={data.id} handle={handleAdopt} />);
+  const petMap = petFilter.map((pet) => <PetItem data={pet} key={pet.id} handle={handleAdopt} />);
 
 
   return (

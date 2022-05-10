@@ -2,7 +2,7 @@ import  {useState} from "react";
 
 
 
-function PetItem({ data , handleAdopt }) {
+function PetItem({ data , handle }) {
 
   const [photo, setPhoto] = useState(data.image);
 
@@ -17,7 +17,7 @@ function PetItem({ data , handleAdopt }) {
           <button type="button" onClick={() => setPhoto(data.image2)} className="btn btn-info">
             Pet
           </button>
-          <button type="button" onClick={() => handleAdopt(data.id)} class="btn btn-info  m-2">
+          <button type="button" onClick={() => handle(data.id)} class="btn btn-info  m-2">
             Adopt
           </button>
         </div>
