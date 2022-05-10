@@ -1,8 +1,27 @@
 import pets from "../petsData";
 import PetItem from "./PetItem";
+import {useState} from "react";
+
+
 
 function PetsList() {
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+//add the states
+const [query, setQuery] = useState("");
+const [type, setType] = useState("");
+
+//handle change events for onChange 
+function handleChange(event){
+  setQuery(event.target.value.toLowerCase());
+}
+
+function handleType(event){
+  setType(event.target.value.toLowerCase())
+}
+
+//iterate through pet list then filter and map result to pet
+  const petList = pets
+  .filter((pet) => pet.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()) && pet.type.includes(type.toLocaleLowerCase()) )
+  .map((pet) => <PetItem pet={pet} key={pet.id} name={pet.name.toLocaleLowerCase()} type={pet.type.toLocaleLowerCase()} />);
 
   return (
     <section id="doctors" className="doctor-section pt-140">
@@ -12,7 +31,8 @@ function PetsList() {
             <div className="section-title text-center mb-30">
               <h1 className="mb-25 wow fadeInUp" data-wow-delay=".2s">
                 Fur-ends
-              </h1>
+              </h1> 
+      {setQuery}
               <div className="input-group rounded">
                 <input
                   type="search"
@@ -20,11 +40,12 @@ function PetsList() {
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="search-addon"
+                  onChange={handleChange}
                 />
               </div>
               <br />
               Type:
-              <select className="form-select">
+              <select onChange={handleType} className="form-select">
                 <option value="" selected>
                   All
                 </option>
@@ -32,6 +53,7 @@ function PetsList() {
                 <option value="Dog">Dog</option>
                 <option value="Rabbit">Rabbit</option>
               </select>
+              {setType}
             </div>
           </div>
         </div>
